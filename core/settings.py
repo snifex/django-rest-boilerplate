@@ -29,6 +29,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
+VALID_API_KEYS = env.str("VALID_API_KEYS").split(",")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -47,12 +49,15 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-
+    'apps.bawls',
+    'apps.media'
 ]
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'rest_framework_api',
     'channels',
+    'storages'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -139,9 +144,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_LOCATION = "static"
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_LOCATION = "static"
+# STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -174,3 +182,39 @@ CACHES = {
 }
 
 CHANNELS_ALLOWED_ORIGINS = "http://localhost:3000"
+
+# AWS_CLOUDFRONT_DOMAIN = env("AWS_CLOUDFRONT_DOMANIN")
+# AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
+# AWS_CLOUDFRONT_KEY = env.str("AWS_CLOUDFRONT_KEY",multiline=True).encode('ascii').strip()
+
+
+# AWS Settngs
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME")
+# AWS_S3_CUSTOM_DOMAIN = AWS_CLOUDFRONT_DOMAIN
+AWS_S3_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+
+# Security and perms
+AWS_QUERYSTRING_AUTH = False #Disable firmas on URLS (public files)
+AWS_FILE_OVERWRITE = False 
+AWS_DEFAULT_ACL = None # Access default as public
+AWS_QUERYSTRING_EXPIRE = 5 # Expire time URL Firms
+
+
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl" : "max-age=86400"
+}
+
+# Static files configs
+STATIC_LOCATION = "static"
+STATIC_URL = f"{AWS_S3_DOMAIN}/{STATIC_LOCATION}/"
+STATICFILES_STORAGE = "core.storage_backends.StaticStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# Media files configs
+MEDIA_LOCATION = "media"
+MEDIA_URL = f"{AWS_S3_DOMAIN}/{MEDIA_LOCATION}/"
+MEDIA_ROOT = MEDIA_URL
+DEFAULT_FILE_STORAGE = "core.storage_backends.PublicMediaStorage"
