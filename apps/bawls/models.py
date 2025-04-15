@@ -48,13 +48,22 @@ class GalleryItem(models.Model):
 
     def thumbnail_preview(self):
         if self.thumbnail:
-            serializer = MediaSerializer(instance = self.thumbnail)
-            url = serializer.data.get('url')
-            if url:
-                return format_html('<img src="{}" style="width: 100px; height: auto;/>', url)
-        return 'No Thumbnail'
-    
-    thumbnail_preview.short_description = "Thumbnail Preview"
+            # Get the URL from the thumbnail's file field
+            if hasattr(self.thumbnail, 'file') and self.thumbnail.file:
+                if self.thumbnail.media_type == 'image':
+                    return format_html(
+                        '<img src="{}" style="max-height: 100px; max-width: 100px;" />', 
+                        self.thumbnail.file.url
+                    )
+                else:
+                    return format_html(
+                        '<a href="{}" target="_blank">{}</a>',
+                        self.thumbnail.file.url,
+                        self.thumbnail.name or "View File"
+                    )
+        return "No thumbnail"
+    thumbnail_preview.short_description = 'Thumbnail Preview'
+    thumbnail_preview.allow_tags = True
 
 class CoalitionMember(models.Model):
     # class CoalitionObjects(models.Manager):
@@ -89,10 +98,19 @@ class CoalitionMember(models.Model):
     
     def thumbnail_preview(self):
         if self.thumbnail:
-            serializer = MediaSerializer(instance = self.thumbnail)
-            url = serializer.data.get('url')
-            if url:
-                return format_html('<img src="{}" style="width: 100px; height: auto;/>', url)
-        return 'No Thumbnail'
-    
-    thumbnail_preview.short_description = "Thumbnail Preview"
+            # Get the URL from the thumbnail's file field
+            if hasattr(self.thumbnail, 'file') and self.thumbnail.file:
+                if self.thumbnail.media_type == 'image':
+                    return format_html(
+                        '<img src="{}" style="max-height: 100px; max-width: 100px;" />', 
+                        self.thumbnail.file.url
+                    )
+                else:
+                    return format_html(
+                        '<a href="{}" target="_blank">{}</a>',
+                        self.thumbnail.file.url,
+                        self.thumbnail.name or "View File"
+                    )
+        return "No thumbnail"
+    thumbnail_preview.short_description = 'Thumbnail Preview'
+    thumbnail_preview.allow_tags = True

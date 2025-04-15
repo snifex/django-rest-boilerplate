@@ -8,15 +8,15 @@ services:
       - .:/app
     ports:
       - 8000:8000
-    depends_on:
-      - django_redis
+    # depends_on:
+    #   - django_redis
 
   # Redis
-  django_redis:
-    image: redis
-    container_name: django_redis
-    ports: 
-      - 6379:6379
+  # django_redis:
+  #   image: redis
+  #   container_name: django_redis
+  #   ports: 
+  #     - 6379:6379
 
 
   django_db:

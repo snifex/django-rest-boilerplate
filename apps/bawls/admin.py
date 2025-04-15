@@ -15,7 +15,7 @@ class CoallitionMemberAdmin(admin.ModelAdmin):
     search_fields = ("name", "blockchain", "narrative",)
     list_filter = ("name",)
     ordering = ("name",)
-    readonly_fields = ("created_at", "updated_at",)
+    readonly_fields = ("thumbnail_preview","created_at", "updated_at",)
     # inlines = [MediaInline]
     
     
@@ -26,7 +26,7 @@ class GalleryItemAdmin(admin.ModelAdmin):
     search_fields = ("title", "type", "columns", "rows",)
     list_filter = ("title","type", "updated_at",)
     ordering = ("-created_at",)
-    readonly_fields = ("created_at", "updated_at",)
+    readonly_fields = ("thumbnail_preview","created_at", "updated_at",)
     fieldsets = (
         ("General Information", {
             "fields": ("title", "type", "logoUrl", "thumbnail", "columns", "rows",)

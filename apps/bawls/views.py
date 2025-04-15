@@ -10,42 +10,42 @@ from core.permissions import HasValidAPIKey
 
 
 class CoallitionListView(StandardAPIView):
-    # permission_classes = [HasValidAPIKey]
     def get(self, request, *args, **kwargs):
         try:
-            coallition_members = CoalitionMember.objects.all()
-
-            if not coallition_members.exists():
+            recent_only = request.query_params.get('recent', '').lower() == 'true'
+            queryset = CoalitionMember.objects.all().order_by('-created_at')
+            
+            if recent_only:
+                queryset = queryset[:5]
+                
+            if not queryset.exists():
                 raise NotFound(detail="No posts found.")
 
-            serialize_members = CoallitionSerializer(coallition_members, many=True).data
+            serialize_members = CoallitionSerializer(queryset, many=True).data
 
-        except CoalitionMember.DoesNotExist:
-            raise NotFound(detail="No posts found.")
-        
         except Exception as e:
-            raise APIException(detail=f"An unexpected error ocureed: {str(e)}")
+            raise APIException(detail=f"An unexpected error occurred: {str(e)}")
         
         return self.response(serialize_members)
     
 class GalleryItemsListView(StandardAPIView):
     def get(self, request, *args, **kwargs):
         try:
-            gallery_items = GalleryItem.objects.all()
+            recent_only = request.query_params.get('recent', '').lower() == 'true'
+            queryset = GalleryItem.objects.all().order_by('-created_at')
 
-            if not gallery_items.exists():
-                raise NotFound(detail="No gallery items found.")
-            
-            serialize_members = GallerySerializer(gallery_items, many=True).data
-        
-        except CoalitionMember.DoesNotExist:
-                raise NotFound(detail="No gallery items found.")
+            if recent_only:
+                queryset = queryset[:5]
+                
+            if not queryset.exists():
+                raise NotFound(detail="No posts found.")
+
+            serialize_members = GallerySerializer(queryset, many=True).data
         
         except Exception as e:
             raise APIException(detail=f"An unexpected error ocureed: {str(e)}")
        
         return self.response(serialize_members)
-
 
 # class CoallitionDetailView(APIView):
 #     def get(self, request, name):

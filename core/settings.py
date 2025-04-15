@@ -162,26 +162,26 @@ REST_FRAMEWORK = {
     ]
 }
 
-CHANNELLS_LAYERS = {
-    "default" : {
-        "BACKEND": "channels-redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [env("REDIS_URL")]
-        }
-    }
-}
+# CHANNELLS_LAYERS = {
+#     "default" : {
+#         "BACKEND": "channels-redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [env("REDIS_URL")]
+#         }
+#     }
+# }
 
-CACHES = {
-    "default" : {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": env("REDIS_URL"),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        }
-    }
-}
+# CACHES = {
+#     "default" : {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": env("REDIS_URL"),
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
+#         }
+#     }
+# }
 
-CHANNELS_ALLOWED_ORIGINS = "http://localhost:3000"
+# CHANNELS_ALLOWED_ORIGINS = "http://localhost:3000"
 
 # AWS_CLOUDFRONT_DOMAIN = env("AWS_CLOUDFRONT_DOMANIN")
 # AWS_CLOUDFRONT_KEY_ID = env.str("AWS_CLOUDFRONT_KEY_ID").strip()
