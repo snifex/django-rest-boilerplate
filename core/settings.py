@@ -29,8 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
+<<<<<<< HEAD
 VALID_API_KEYS = env.str("VALID_API_KEYS").split(",")
 
+=======
+>>>>>>> 964b2ce2feb47af38df94ceea8b926971b6550b1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
