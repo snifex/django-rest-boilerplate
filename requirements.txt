@@ -3,6 +3,8 @@ djangorestframework==3.16.0
 djangorestframework-api-response==0.1.0
 django-redis==5.4.0
 django-environ==0.12.0
+django-cors-headers==4.7.0
+
 uvicorn==0.34.0
 channels==4.1.0
 channels-redis==4.2.0

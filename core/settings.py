@@ -57,6 +57,7 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'corsheaders',
     'rest_framework',
     'rest_framework_api',
     'channels',
@@ -66,6 +67,7 @@ THIRD_PARTY_APPS = [
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,6 +77,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS Configuration
+CORS_ALLOW_ALL_ORIGINS = True  # For development only!
+CORS_ALLOW_CREDENTIALS = True
+
+# For production, use this instead:
+"""
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",  # Angular dev server
+    "https://yourproductiondomain.com",
+]
+"""
 
 ROOT_URLCONF = 'core.urls'
 
