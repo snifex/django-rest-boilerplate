@@ -22,7 +22,6 @@ from django.conf import settings
 from .views import TestView
 
 urlpatterns = [
-    path('api/', include('apps.bawls.urls')),
-    path('api/media', include('apps.media.urls')),
+    path('test', TestView.as_view()),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

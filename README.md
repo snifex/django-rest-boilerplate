@@ -13,3 +13,11 @@ Then we execute the following commands
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+## Environment Variables
+
+Copy the `.env.example` file to `.env` and fill in the actual values:
+
+```bash
+cp .env.example .env
+```
